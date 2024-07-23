@@ -1,4 +1,4 @@
-FROM alpine:3.20.0
+FROM alpine:3.20.2
 
 COPY --chmod=777 script.sh /script.sh
 
