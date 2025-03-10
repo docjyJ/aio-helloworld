@@ -3,10 +3,12 @@ name: Build and Publish Docker image in GitHub Container Registry
 on:
   push:
     branches:
-      - '6134'
+      - 'main'
+    tags:
+      - 'v*'
   pull_request:
     branches:
-      - '6134'
+      - 'main'
 
 jobs:
   docker:
@@ -35,6 +37,7 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=raw,value=develop-6134
+            type=raw,value=develop
             type=raw,value=beta
             type=ref,event=pr
             type=semver,pattern={{major}}.{{minor}}.{{patch}}
