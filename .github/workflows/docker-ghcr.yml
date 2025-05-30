@@ -44,7 +44,7 @@ jobs:
         if: github.event_name != 'pull_request'
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
@@ -58,8 +58,9 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
+        if: github.event_name != 'pull_request'
         with:
           subject-name: ghcr.io/${{ github.repository }}
           subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: ${{ github.event_name != 'pull_request' }}
+          push-to-registry: true
