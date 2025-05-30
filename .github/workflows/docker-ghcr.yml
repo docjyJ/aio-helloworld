@@ -1,32 +1,29 @@
 name: Build and Publish Docker image in GitHub Container Registry
 
 on:
+  pull_request:
   push:
     branches:
       - 'main'
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - 'main'
 
 jobs:
   docker:
+    name: Run docker build and push
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
       packages: write
       attestations: write
       id-token: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -36,9 +33,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=develop-6134
-            type=raw,value=develop
-            type=raw,value=beta
+            type=raw,value=main
             type=ref,event=pr
             type=semver,pattern={{major}}.{{minor}}.{{patch}}
             type=semver,pattern=v{{major}}
@@ -62,9 +57,9 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      # - name: Generate artifact attestation
-      #   uses: actions/attest-build-provenance@v1
-      #   with:
-      #     subject-name: ghcr.io/${{ github.repository }}
-      #     subject-digest: ${{ steps.push.outputs.digest }}
-      #     push-to-registry: ${{ github.event_name != 'pull_request' }}
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-name: ghcr.io/${{ github.repository }}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: ${{ github.event_name != 'pull_request' }}
