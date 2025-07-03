@@ -41,8 +41,8 @@ jobs:
             type=semver,pattern=v{{major}}
           labels: |
             org.opencontainers.image.authors=${{ github.repository_owner }}
-            org.opencontainers.image.description=https://github.com/${{ github.repository }}
-            org.opencontainers.image.documentation=Stalwart Community Container for Nextcloud All-In-One
+            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}/
+            org.opencontainers.image.description=Stalwart Community Container for Nextcloud All-In-One
             org.opencontainers.image.vendor=Nextcloud
 
       - name: Log in to the GitHub Container Registry
