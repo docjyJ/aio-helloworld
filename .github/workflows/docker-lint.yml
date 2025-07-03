@@ -1,25 +1,27 @@
-name: Hadolint
+name: Docker Lint
 
 on:
   pull_request:
     paths:
-      - 'Dockerfile'
+      - ./Dockerfile
   push:
     branches:
-      - 'main'
-    paths: 
-       - 'Dockerfile'
+      - main
+    paths:
+      - ./Dockerfile
   schedule:
-    - cron: '35 20 * * 6'
+    - cron: '0 0 * * 0'
 
 jobs:
   hadolint:
     name: Run hadolint scanning
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       security-events: write
       actions: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

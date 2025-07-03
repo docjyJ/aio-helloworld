@@ -6,7 +6,7 @@ on:
       - '**.sh'
   push:
     branches:
-      - 'main'
+      - main
     paths:
       - '**.sh'
 
@@ -14,9 +14,11 @@ jobs:
   shellcheck:
     name: Run Shellcheck
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       actions: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
