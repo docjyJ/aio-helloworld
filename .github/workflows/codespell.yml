@@ -1,8 +1,5 @@
 name: Codespell
 
-permissions:
-  contents: read
-
 on:
   pull_request:
   push:
@@ -13,6 +10,9 @@ jobs:
   codespell:
     name: Check spelling
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
 
     steps:
       - name: Check out code
