@@ -9,7 +9,7 @@ updates:
     labels:
       - dependencies
     cooldown:
-      default-days: 7
+      default-days: 28
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
